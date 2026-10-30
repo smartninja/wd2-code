@@ -1,0 +1,6 @@
+apiflask
+flask-sqlalchemy
+psycopg[binary]
+flask-security-too
+argon2-cffi
+flask-wtf

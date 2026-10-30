@@ -1,0 +1,32 @@
+meta {
+  name: Update recipe
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/api/recipes/{{recipeId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Cheese omelette",
+    "tag": "breakfast"
+  }
+}
+
+docs {
+  Run "Create recipe" first: it sets {{recipeId}}.
+}
+
+tests {
+  test("200 OK", function () {
+    expect(res.getStatus()).to.equal(200);
+  });
+
+  test("returns the updated recipe", function () {
+    expect(res.getBody().name).to.equal("Cheese omelette");
+  });
+}

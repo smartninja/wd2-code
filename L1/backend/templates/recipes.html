@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Keeper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <main>
+      <h1>Recipes</h1>
+
+      <ul>
+        {% for recipe in recipes %}
+          <li>
+            <strong>{{ recipe.name }}</strong>
+            {% if recipe.tag %}<span class="tag">{{ recipe.tag }}</span>{% endif %}
+          </li>
+        {% else %}
+          <li class="empty">No recipes yet.</li>
+        {% endfor %}
+      </ul>
+    </main>
+  </body>
+</html>

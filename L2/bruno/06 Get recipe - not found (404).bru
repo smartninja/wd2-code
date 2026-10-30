@@ -1,0 +1,17 @@
+meta {
+  name: Get recipe - not found (404)
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/api/recipes/9999
+  body: none
+  auth: none
+}
+
+tests {
+  test("404 Not Found", function () {
+    expect(res.getStatus()).to.equal(404);
+  });
+}

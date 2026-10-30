@@ -1,0 +1,10 @@
+apiflask
+flask-sqlalchemy
+psycopg[binary]
+flask-security-too
+argon2-cffi
+boto3
+celery
+redis
+pillow
+flask-wtf

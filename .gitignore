@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+
+# Environment files (keep the committed templates)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+*.local
+*.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+
+# Local uploads
+uploads/
+
+# Logs
+*.log

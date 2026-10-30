@@ -1,0 +1,36 @@
+meta {
+  name: Create recipe
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/recipes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Omelette",
+    "tag": "breakfast"
+  }
+}
+
+script:post-response {
+  // Remember the new id so the requests below can use {{recipeId}}
+  bru.setVar("recipeId", res.getBody().id);
+}
+
+tests {
+  test("201 Created", function () {
+    expect(res.getStatus()).to.equal(201);
+  });
+
+  test("returns the new recipe with an id", function () {
+    const body = res.getBody();
+    expect(body.id).to.be.a("number");
+    expect(body.name).to.equal("Omelette");
+    expect(body.tag).to.equal("breakfast");
+  });
+}

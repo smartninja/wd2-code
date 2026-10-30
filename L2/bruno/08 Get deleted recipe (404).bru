@@ -1,0 +1,21 @@
+meta {
+  name: Get deleted recipe (404)
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/api/recipes/{{recipeId}}
+  body: none
+  auth: none
+}
+
+docs {
+  Run after "Delete recipe": the recipe is gone, so this must be 404.
+}
+
+tests {
+  test("404 Not Found", function () {
+    expect(res.getStatus()).to.equal(404);
+  });
+}
