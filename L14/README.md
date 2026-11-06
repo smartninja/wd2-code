@@ -5,7 +5,7 @@ lint step to skip the generated `migrations/`) — this lesson builds the CI pip
 in **Semaphore's visual Workflow Builder**, which lives in your Semaphore project
 and your GitHub connection, not in these files.
 
-The pipeline runs *this project's* checks on every push: `ruff` + `pytest` (backend,
+The pipeline runs *this project's* checks on every push: `ruff` (pinned to 0.17.3) + `pytest` (backend,
 against a Postgres it starts with `sem-service`), `bun run build` + `vitest`
 (frontend), and the **Playwright E2E test** — uploading its trace/video/screenshot
 as an artifact on failure. Run everything locally exactly as in Lesson 13; the

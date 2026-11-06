@@ -36,9 +36,8 @@ docker compose exec api flask create-admin   # me@example.com / supersecret
 
 Interactive API docs: http://localhost:8000/docs
 
-Run the backend tests (they use a separate `recipes_test` database, never your dev data):
+Run the backend tests (they use the throwaway `db-test` container, never your dev data):
 
 ```bash
-docker compose exec db createdb -U recipes recipes_test   # first run only
 docker compose exec api pytest
 ```
