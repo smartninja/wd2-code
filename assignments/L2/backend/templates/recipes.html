@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Keeper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <main>
+      <h1>Recipes</h1>
+
+      <form method="post" action="/recipes">
+        <input name="name" placeholder="Recipe name" required>
+        <input name="tag" placeholder="Tag">
+        <button>Add recipe</button>
+      </form>
+
+      <ul>
+        {% for recipe in recipes %}
+          <li>
+            <strong>{{ recipe.name }}</strong>
+            {% if recipe.tag %}<span class="tag">{{ recipe.tag }}</span>{% endif %}
+            <div class="actions">
+              <form method="post" action="/recipes/{{ recipe.id }}/delete">
+                <button class="danger">Delete</button>
+              </form>
+            </div>
+          </li>
+        {% else %}
+          <li class="empty">No recipes yet.</li>
+        {% endfor %}
+      </ul>
+    </main>
+  </body>
+</html>

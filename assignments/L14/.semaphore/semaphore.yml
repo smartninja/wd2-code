@@ -1,0 +1,109 @@
+version: v1.0
+name: Recipe Keeper
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2404
+blocks:
+  - name: Lint & test
+    task:
+      env_vars:
+        - name: FLASK_APP
+          value: main
+        - name: DATABASE_URL
+          value: 'postgresql://postgres@localhost:5432/postgres'
+        - name: TEST_DATABASE_URL
+          value: 'postgresql://postgres@localhost:5432/postgres'
+        - name: SECRET_KEY
+          value: ci-only-not-a-secret
+        - name: SECURITY_PASSWORD_SALT
+          value: ci-only-not-a-secret
+        - name: R2_ENDPOINT
+          value: 'https://r2.invalid'
+        - name: R2_ACCESS_KEY_ID
+          value: ci
+        - name: R2_SECRET_ACCESS_KEY
+          value: ci
+        - name: R2_BUCKET
+          value: ci
+        - name: R2_PUBLIC_URL
+          value: 'https://r2.invalid'
+        - name: REDIS_URL
+          value: 'redis://localhost:6379/0'
+      jobs:
+        - name: 'Frontend type-check, build & component tests'
+          commands:
+            - checkout
+            - cd frontend
+            - bun install
+            - bun run lint
+            - bun run build
+            - bun run vitest --run
+        - name: Backend lint & tests
+          commands:
+            - checkout
+            - sem-version python 3.12
+            - sem-service start postgres
+            - cd backend
+            - pip install -r requirements.txt
+            - pip install ruff==0.17.3
+            - ruff check .
+            - pytest
+    dependencies: []
+  - name: E2E
+    dependencies: []
+    task:
+      env_vars:
+        - name: FLASK_APP
+          value: main
+        - name: DATABASE_URL
+          value: 'postgresql://postgres@localhost:5432/postgres'
+        - name: TEST_DATABASE_URL
+          value: 'postgresql://postgres@localhost:5432/postgres'
+        - name: SECRET_KEY
+          value: ci-only-not-a-secret
+        - name: SECURITY_PASSWORD_SALT
+          value: ci-only-not-a-secret
+        - name: R2_ENDPOINT
+          value: 'https://r2.invalid'
+        - name: R2_ACCESS_KEY_ID
+          value: ci
+        - name: R2_SECRET_ACCESS_KEY
+          value: ci
+        - name: R2_BUCKET
+          value: ci
+        - name: R2_PUBLIC_URL
+          value: 'https://r2.invalid'
+        - name: REDIS_URL
+          value: 'redis://localhost:6379/0'
+      epilogue:
+        always:
+          commands:
+            - 'cd ~ && cd "$SEMAPHORE_GIT_DIR"   # back to the repository root, wherever the job stopped'
+            - artifact push job frontend/playwright-report --expire-in 2w
+      jobs:
+        - name: E2E
+          commands:
+            - checkout
+            - sem-version python 3.12
+            - sem-service start postgres
+            - cd backend
+            - pip install -r requirements.txt
+            - flask db upgrade
+            - flask create-admin
+            - flask run --port 8000 &
+            - cd ../frontend
+            - bun install
+            - bun run build
+            - bun run preview --port 5173 &
+            - bunx playwright install --with-deps chromium
+            - bun run e2e
+  - name: Deploy
+    dependencies:
+      - E2E
+      - Lint & test
+    task:
+      jobs:
+        - name: Deploy app
+          commands:
+            - echo "Success"

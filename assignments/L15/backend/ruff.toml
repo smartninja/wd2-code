@@ -1,0 +1,2 @@
+# ruff check . runs in CI (lesson 14). Migrations are generated code, so skip them.
+extend-exclude = ["migrations"]

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recipe Keeper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <main>
+      <h1>Recipes</h1>
+
+      {% if current_user.is_authenticated %}
+        <div class="status">
+          Signed in as {{ current_user.email }}
+          <form method="post" action="/logout" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="link">Log out</button>
+          </form>
+        </div>
+
+        <form method="post" action="/recipes">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input name="name" placeholder="Recipe name" required>
+          <input name="tag" placeholder="Tag">
+          <button>Add recipe</button>
+        </form>
+      {% else %}
+        <p><a href="/login">Log in</a> to add or delete recipes.</p>
+      {% endif %}
+
+      <ul>
+        {% for recipe in recipes %}
+          <li>
+            <strong>{{ recipe.name }}</strong>
+            {% if recipe.tag %}<span class="tag">{{ recipe.tag }}</span>{% endif %}
+            {% if recipe.thumb_url %}
+              <img src="{{ recipe.thumb_url }}" alt="{{ recipe.name }}">
+            {% elif recipe.image_url %}
+              <img src="{{ recipe.image_url }}" alt="{{ recipe.name }}">
+            {% endif %}
+            {% if current_user.is_authenticated %}
+              <div class="actions">
+                <form method="post" action="/recipes/{{ recipe.id }}/photo" enctype="multipart/form-data">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <input type="file" name="photo" accept="image/*">
+                  <button>Upload photo</button>
+                </form>
+                {% if current_user.has_role("admin") %}
+                  <form method="post" action="/recipes/{{ recipe.id }}/delete">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="danger">Delete</button>
+                  </form>
+                {% endif %}
+              </div>
+            {% endif %}
+          </li>
+        {% else %}
+          <li class="empty">No recipes yet.</li>
+        {% endfor %}
+      </ul>
+    </main>
+  </body>
+</html>

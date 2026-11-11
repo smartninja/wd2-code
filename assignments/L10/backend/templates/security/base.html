@@ -1,0 +1,18 @@
+{# Overrides Flask-Security's own base template so its login page uses our stylesheet #}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ title|default("Recipe Keeper") }}{% endblock title %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block head_scripts %}{% endblock head_scripts %}
+  </head>
+  <body>
+    <main>
+      <p><a href="/">&larr; Back to recipes</a></p>
+      {% block content %}{% endblock content %}
+    </main>
+    {% block scripts %}{% endblock scripts %}
+  </body>
+</html>

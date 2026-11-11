@@ -1,0 +1,29 @@
+meta {
+  name: Create recipe - missing name (422)
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/api/recipes
+  body: json
+  auth: none
+}
+
+body:json {
+  {}
+}
+
+docs {
+  Bad input: the RecipeIn schema requires `name`, so APIFlask rejects this with 422 before our code runs.
+}
+
+tests {
+  test("422 Unprocessable Entity", function () {
+    expect(res.getStatus()).to.equal(422);
+  });
+
+  test("error mentions name", function () {
+    expect(JSON.stringify(res.getBody())).to.include("name");
+  });
+}
