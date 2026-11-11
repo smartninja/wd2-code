@@ -1,6 +1,6 @@
 # WD2 Curriculum
 
-Source code for the WD2 (Web Development 2) curriculum. Over 15 lessons, you build
+Source code for the WD2 (Web Development 2) curriculum. Over 16 lessons, you build
 **Recipe Keeper**, a full-stack recipe app, from a first server-rendered page through
 to a tested app deployed to production.
 
@@ -45,4 +45,5 @@ To work on a lesson, go to its directory and follow its `README.md`.
 | [L12](L12/) | Frontend testing with Vitest and React Testing Library |
 | [L13](L13/) | End-to-end testing with Playwright |
 | [L14](L14/) | CI pipeline with Semaphore |
-| [L15](L15/) | Deployment to Render, staging environment and observability |
+| [L15](L15/) | Deployment to Render through the pipeline, with a staging environment |
+| [L16](L16/) | Production by promotion, and error tracking with Sentry |

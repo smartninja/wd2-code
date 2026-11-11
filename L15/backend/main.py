@@ -1,6 +1,5 @@
 import os
 
-import sentry_sdk
 from apiflask import APIFlask
 from flask_wtf.csrf import generate_csrf
 
@@ -9,11 +8,6 @@ from commands import register_commands
 from extensions import cors, csrf, db, migrate, security
 from models import user_datastore
 from pages import pages
-
-# Error tracking in deployed environments (Sentry). Gated on the env var so it
-# only runs where a DSN is configured — never in local dev or tests.
-if os.environ.get("SENTRY_DSN"):
-    sentry_sdk.init(dsn=os.environ["SENTRY_DSN"])
 
 
 def create_app(test_config=None):

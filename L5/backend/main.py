@@ -2,7 +2,7 @@ import io
 import json
 import os
 import uuid
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 import boto3
 from apiflask import APIFlask, Schema
@@ -108,7 +108,8 @@ with app.app_context():
     db.create_all()
 
 
-ALLOWED = {"png", "jpg", "jpeg", "webp"}
+# Allowed photo types: file extension -> the content type R2 stores with the file
+ALLOWED = {"png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg", "webp": "image/webp"}
 
 
 def is_allowed(filename):
@@ -120,7 +121,9 @@ def store_photo(file):
         return None
     ext = file.filename.rsplit(".", 1)[1].lower()
     key = f"{uuid.uuid4()}.{ext}"
-    s3.upload_fileobj(file, os.environ["R2_BUCKET"], key)
+    s3.upload_fileobj(
+        file, os.environ["R2_BUCKET"], key, ExtraArgs={"ContentType": ALLOWED[ext]}
+    )
     return f"{os.environ['R2_PUBLIC_URL']}/{key}"
 
 
@@ -143,7 +146,7 @@ def backup_recipes():
     """Write all recipes to a timestamped JSON file in R2 (a cron job)."""
     recipes = [{"id": r.id, "name": r.name, "tag": r.tag} for r in Recipe.query.all()]
     data = json.dumps(recipes, indent=2).encode()
-    key = f"backups/recipes-{datetime.now(UTC):%Y-%m-%d}.json"
+    key = f"backups/recipes-{datetime.now(timezone.utc):%Y-%m-%d}.json"
     s3.upload_fileobj(io.BytesIO(data), os.environ["R2_BUCKET"], key)
     print(f"backed up {len(recipes)} recipes to {key}")
 

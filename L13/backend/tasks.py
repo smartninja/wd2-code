@@ -36,7 +36,9 @@ def make_thumbnail(self, recipe_id):
             out.seek(0)
 
             thumb_key = f"thumb_{key.rsplit('.', 1)[0]}.png"
-            s3.upload_fileobj(out, os.environ["R2_BUCKET"], thumb_key)
+            s3.upload_fileobj(
+                out, os.environ["R2_BUCKET"], thumb_key, ExtraArgs={"ContentType": "image/png"}
+            )
             recipe.thumb_url = f"{os.environ['R2_PUBLIC_URL']}/{thumb_key}"
             db.session.commit()
         except (BotoCoreError, ClientError) as exc:

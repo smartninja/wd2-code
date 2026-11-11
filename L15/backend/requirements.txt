@@ -11,5 +11,4 @@ redis
 pillow
 pytest
 flask-wtf
-sentry-sdk
 gunicorn

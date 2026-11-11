@@ -26,9 +26,8 @@ export async function getRecipes(): Promise<Recipe[]> {
   return res.json();
 }
 
-export async function getRecipe(id: number): Promise<Recipe | null> {
+export async function getRecipe(id: number): Promise<Recipe> {
   const res = await fetch(`${API}/api/recipes/${id}`, { credentials: "include" });
-  if (res.status === 404) return null; // no such recipe: an answer, not an error
   if (!res.ok) throw new Error("Failed to load recipe");
   return res.json();
 }

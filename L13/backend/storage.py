@@ -10,7 +10,8 @@ s3 = boto3.client(
     aws_secret_access_key=os.environ["R2_SECRET_ACCESS_KEY"],
 )
 
-ALLOWED = {"png", "jpg", "jpeg", "webp"}
+# Allowed photo types: file extension -> the content type R2 stores with the file
+ALLOWED = {"png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg", "webp": "image/webp"}
 
 
 def is_allowed(filename):
@@ -22,5 +23,7 @@ def store_photo(file):
         return None
     ext = file.filename.rsplit(".", 1)[1].lower()
     key = f"{uuid.uuid4()}.{ext}"
-    s3.upload_fileobj(file, os.environ["R2_BUCKET"], key)
+    s3.upload_fileobj(
+        file, os.environ["R2_BUCKET"], key, ExtraArgs={"ContentType": ALLOWED[ext]}
+    )
     return f"{os.environ['R2_PUBLIC_URL']}/{key}"

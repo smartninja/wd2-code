@@ -1,0 +1,16 @@
+version: v1.0
+name: Deploy production
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2404
+blocks:
+  - name: Deploy production
+    task:
+      secrets:
+        - name: render-production-hooks
+      jobs:
+        - name: Trigger Render deploys
+          commands:
+            - 'curl -fsS -X POST "$RENDER_PRODUCTION_BACKEND_HOOK&ref=$SEMAPHORE_GIT_SHA"'
+            - 'curl -fsS -X POST "$RENDER_PRODUCTION_FRONTEND_HOOK&ref=$SEMAPHORE_GIT_SHA"'
