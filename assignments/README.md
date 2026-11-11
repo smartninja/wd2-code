@@ -11,15 +11,15 @@ Lesson 16 is the course wrap-up and has no homework.
 
 | Lesson | Homework |
 | ------ | -------- |
-| [L1](L1/) | Filter the recipe page by tag |
-| [L2](L2/) | `GET /api/recipes?tag=…` filter |
-| [L3](L3/) | An `editor` role that may update but not delete |
-| [L4](L4/) | A 5 MB upload limit that answers `422` |
-| [L5](L5/) | A Celery task that deletes a recipe's thumbnail |
-| [L6](L6/) | A `created_at` column with its own migration |
-| [L7](L7/) | A Tailwind footer, and the Jinja page mapped to React components |
-| [L8](L8/) | Recipe photo in `RecipeItem`, and a validated `servings` field |
-| [L9](L9/) | `getRecipe` / `useRecipe`, and editing a recipe's tag |
+| [L01](L01/) | Filter the recipe page by tag |
+| [L02](L02/) | `GET /api/recipes?tag=…` filter |
+| [L03](L03/) | An `editor` role that may update but not delete |
+| [L04](L04/) | A 5 MB upload limit that answers `422` |
+| [L05](L05/) | A Celery task that deletes a recipe's thumbnail |
+| [L06](L06/) | A `created_at` column with its own migration |
+| [L07](L07/) | A Tailwind footer, and the Jinja page mapped to React components |
+| [L08](L08/) | Recipe photo in `RecipeItem`, and a validated `servings` field |
+| [L09](L09/) | `getRecipe` / `useRecipe`, and editing a recipe's tag |
 | [L10](L10/) | A "Back to list" link on the detail page |
 | [L11](L11/) | Update and delete tests, and docstrings in `/docs` |
 | [L12](L12/) | A `RecipeList` test with two recipes |

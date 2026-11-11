@@ -21,20 +21,20 @@ To work on a lesson, go to its directory and follow its `README.md`.
 
 | Lesson | Topic |
 | ------ | ----- |
-| [L1](L1/) | Docker, Flask and PostgreSQL, with a first server-rendered Jinja page |
-| [L2](L2/) | REST API with APIFlask and generated Swagger docs |
-| [L3](L3/) | Session-cookie authentication and authorization, with CSRF protection |
-| [L4](L4/) | Photo upload to Cloudflare R2 |
-| [L5](L5/) | Background jobs with Celery and Redis |
-| [L6](L6/) | Database migrations with Flask-Migrate |
+| [L01](L01/) | Docker, Flask and PostgreSQL, with a first server-rendered Jinja page |
+| [L02](L02/) | REST API with APIFlask and generated Swagger docs |
+| [L03](L03/) | Session-cookie authentication and authorization, with CSRF protection |
+| [L04](L04/) | Photo upload to Cloudflare R2 |
+| [L05](L05/) | Background jobs with Celery and Redis |
+| [L06](L06/) | Database migrations with Flask-Migrate |
 
 ### Arc B · Single-Page App
 
 | Lesson | Topic |
 | ------ | ----- |
-| [L7](L7/) | React + TypeScript scaffold with Bun, Vite and Tailwind |
-| [L8](L8/) | React fundamentals and forms with TanStack Form |
-| [L9](L9/) | Connecting to the backend with TanStack Query |
+| [L07](L07/) | React + TypeScript scaffold with Bun, Vite and Tailwind |
+| [L08](L08/) | React fundamentals and forms with TanStack Form |
+| [L09](L09/) | Connecting to the backend with TanStack Query |
 | [L10](L10/) | Multiple screens with TanStack Router |
 
 ### Arc C · Test & Ship
